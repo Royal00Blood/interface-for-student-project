@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>📊 Анализ файлов и графики</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- БАННЕР -->
+<div class="banner"
+     style="background: url('{{ url_for('static', filename='images/banner.jpg') }}') center/cover no-repeat;">
+    <div class="overlay"></div>
+    <div class="banner-content">
+        <h1>📈 Аналитика и визуализация данных</h1>
+        <p>Загружай файлы, смотри результаты и графики</p>
+    </div>
+</div>
+
+<div class="main-layout">
+
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <div class="sidebar">
+        <h2>📂 Загрузка файла</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Загрузить</button>
+        </form>
+
+        <h3>📁 Загруженные файлы:</h3>
+        <ul class="file-list">
+            {% for f in uploaded_files %}
+                <li>
+                    {{ f }}
+                    <a href="/download/{{ f }}">⬇️</a>
+                    <a href="/read/{{ f }}">📖</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- ПРАВАЯ ПАНЕЛЬ -->
+    <div class="content">
+
+        {% if result_img %}
+        <div class="result-block">
+            <h3>📷 Результат обработки:</h3>
+            <img src="{{ url_for('static', filename='results/' + result_img) }}" alt="Result Image">
+        </div>
+        {% endif %}
+
+        <div class="charts-row">
+            <div class="chart-box"><canvas id="chart1"></canvas></div>
+            <div class="chart-box"><canvas id="chart2"></canvas></div>
+            <div class="chart-box"><canvas id="chart3"></canvas></div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- РЕГАЛИИ АВТОРА -->
+<footer>
+    <p>Разработано: RoyalBlood — ML & Web Integration</p>
+    <p>Используются: Flask, Chart.js, HTML5 и CSS3</p>
+</footer>
+
+<script>
+const labels = {{ chart_labels | tojson | safe }};
+const d1 = {{ chart_data1 | tojson | safe }};
+const d2 = {{ chart_data2 | tojson | safe }};
+const d3 = {{ chart_data3 | tojson | safe }};
+
+function buildChart(elementId, dataArray, color) {
+    new Chart(document.getElementById(elementId).getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Значения',
+                data: dataArray,
+                borderColor: color,
+                backgroundColor: color.replace('1)', '0.2)'),
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { display: true },
+                y: { display: true }
+            }
+        }
+    });
+}
+
+buildChart("chart1", d1, 'rgba(54, 162, 235, 1)');
+buildChart("chart2", d2, 'rgba(75, 192, 192, 1)');
+buildChart("chart3", d3, 'rgba(255, 99, 132, 1)');
+</script>
+
+</body>
+</html>

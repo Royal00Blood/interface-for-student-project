@@ -1,0 +1,94 @@
+/* ОБЩИЕ СТИЛИ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #222;
+}
+
+/* БАННЕР */
+.banner {
+    position: relative;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.banner::before {
+    content: "";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+}
+.banner-content h1 { font-size: 34px; color:white; }
+.banner-content p  { font-size: 18px; color:white; }
+
+/* МАКЕТ */
+.main-layout {
+    display: flex;
+    padding: 20px;
+}
+
+/* ЛЕВАЯ ПАНЕЛЬ */
+.sidebar {
+    width: 280px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-right: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.sidebar h2 { margin-bottom: 15px; }
+.sidebar input[type="file"] { width: 100%; margin-bottom: 10px; }
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+.sidebar button:hover { background:#218838; }
+
+.file-list { list-style:none; margin-top:10px; }
+.file-list li {
+    margin-bottom:8px;
+    font-size:14px;
+}
+.file-list a { color:#007bff; margin-left:6px; text-decoration:none; }
+
+/* ПРАВАЯ СОДЕРЖИМАЯ ОБЛАСТЬ */
+.content { flex: 1; }
+
+.result-block img {
+    max-width: 100%; border-radius:6px;
+    margin-bottom:25px;
+}
+
+/* ГРАФИКИ */
+.charts-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+.chart-box {
+    width: 32%;
+    height: 280px;
+    background:white;
+    padding:10px;
+    border-radius:8px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.12);
+}
+
+/* ФУТЕР */
+footer {
+    text-align:center;
+    padding:15px;
+    background:#fff;
+    margin-top:30px;
+    font-size:14px;
+    color:#444;
+}
